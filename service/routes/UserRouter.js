@@ -11,12 +11,12 @@ const router = express.Router();
 
 router.get('/', userList);
 
-router.get('/:id', userGet);
+router.get('/:email', userGet);
 
-router.put('/:id', userUpdate);
+router.put('/:email', userUpdate);
 
 router.post('/', userCreate);
 
-router.delete('/:id', userDelete);
+router.delete('/:email', userDelete);
 
 module.exports = router;
