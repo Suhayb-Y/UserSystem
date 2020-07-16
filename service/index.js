@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
+const UserRouter = require('./routes/UserRouter');
+
 require('dotenv').config()
 
 //Body parser (read req body)
@@ -12,6 +14,9 @@ app.use(express.urlencoded({extended: true}));
 app.get('/', (_, res) => {
     res.send('User System');
 });
+
+//Endpoint URL routing, pass to appropriate router to handle
+app.use('/api/users', UserRouter);
 
 //MongoDB boilerplate setup (https://mongoosejs.com/docs/connections.html)
 //Establish the connection
