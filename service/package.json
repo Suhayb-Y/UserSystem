@@ -1,12 +1,12 @@
 {
-  "name": "usersystem",
+  "name": "user-system-service",
   "version": "1.0.0",
   "description": "Tiered user system with JWT in a MERN application",
-  "main": "index.js",
+  "main": "index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,12 @@
     "url": "https://github.com/Suhayb-Y/UserSystem/issues"
   },
   "homepage": "https://github.com/Suhayb-Y/UserSystem#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.24"
+  },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4"
   }
 }
