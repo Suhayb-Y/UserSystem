@@ -1,0 +1,22 @@
+{
+  "name": "usersystem",
+  "version": "1.0.0",
+  "description": "Tiered user system with JWT in a MERN application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Suhayb-Y/UserSystem.git"
+  },
+  "author": "Suhayb Bashir Yousif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Suhayb-Y/UserSystem/issues"
+  },
+  "homepage": "https://github.com/Suhayb-Y/UserSystem#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
