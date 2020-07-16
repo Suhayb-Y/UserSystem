@@ -10,11 +10,6 @@ require('dotenv').config()
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//TEMP:
-app.get('/', (_, res) => {
-    res.send('User System');
-});
-
 //Endpoint URL routing, pass to appropriate router to handle
 app.use('/api/users', UserRouter);
 
