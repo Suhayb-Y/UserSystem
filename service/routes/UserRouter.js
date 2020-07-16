@@ -4,6 +4,7 @@ const {
     userUpdate,
     userList,
     userCreate,
+    userLogin,
     userDelete
 } = require('../controllers/UserController');
 
@@ -15,7 +16,9 @@ router.get('/:email', userGet);
 
 router.put('/:email', userUpdate);
 
-router.post('/', userCreate);
+router.post('/register', userCreate);
+
+router.post('/login', userLogin);
 
 router.delete('/:email', userDelete);
 

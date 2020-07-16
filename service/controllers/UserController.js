@@ -13,7 +13,8 @@ exports.userList = (_, res) => {
   
 exports.userGet = (req, res) => {
     User.findOne({'email': req.params.email}, (err, user) => {
-        if (err) return res.status(404).json({message: `No user with email ${req.params.email} was found!`});
+        if (err) return res.status(400).json({message: `An error has occurred: ${err}`});
+        if (!user) return res.status(404).json({message: `No user with email ${req.params.email} was found!`});
 
         return res.json(user);
     });
@@ -32,6 +33,19 @@ exports.userCreate = (req, res) => {
         if (err) return res.status(400).json({message: `An error has occurred: ${err}`});
 
         return res.json(newUser);
+    });
+};
+
+exports.userLogin = (req, res) => {
+    console.log("Logging in...");
+
+    User.findOne({'email': req.body.email}, (err, user) => {
+        if (err) return res.status(400).json({message: `An error has occurred: ${err}`});
+        if (!user) return res.status(404).json({message: `No user with email ${req.body.email} was found!`});
+        if (user.password !== req.body.password) 
+            return res.status(400).json({message: `Incorrect password for ${req.body.email}`});
+        console.log(user);
+        return res.json({message: 'Successfully logged in!'});
     });
 };
 

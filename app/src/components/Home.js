@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from 'axios';
 
 const FormContainer = styled.div`
   height: 100%;
@@ -22,7 +23,7 @@ const FormNavHeading = styled.p`
   cursor: pointer;
   font-family: Inter-Bold;
   font-size: 18px;
-  color: ${(props) => (props.mode === true ? "black" : "#772F92")};
+  color: ${(props) => (props.highlighted === true ? "black" : "#C2C6CA")};
   margin: 0;
 `;
 
@@ -94,11 +95,43 @@ export default function Home() {
     const [repassword, setRepass] = useState("");
 
     const register = (e) => {
-        
+        const user = {
+            email,
+            name,
+            password
+        };
+        console.log(user);
+
+        if (password != repassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        axios.post('/api/users/register', user).then(res => {
+            setName('');
+            setEmail('');
+            setPass('');
+            setRepass('');
+            console.log(res.data);
+            setMode("login");
+        }, err => {
+            console.log(err.response.data);
+        });
     };
 
     const login = (e) => {
-        
+        const user = {
+            email,
+            password
+        };
+
+        axios.post('/api/users/login', user).then(res => {
+            console.log(res.data);
+        }, err => {
+            console.log(err.response.data);
+            setEmail('');
+            setPass('');
+        });
     };
 
     return (
@@ -106,13 +139,13 @@ export default function Home() {
             <FormNav>
                 <FormNavHeading
                     onClick={() => setMode("register")}
-                    mode={mode === "Register" ? true : false}
+                    highlighted={mode === "register" ? true : false}
                 >
                     Register
                 </FormNavHeading>
                 <FormNavHeading
                     onClick={() => setMode("login")}
-                    mode={mode === "login" ? true : false}
+                    highlighted={mode === "login" ? true : false}
                 >
                     Login
                 </FormNavHeading>
@@ -120,7 +153,7 @@ export default function Home() {
             {mode === "register" ? (
                 <RegisterDiv>
                     <FormInputWrapper>
-                        <FormInputLabel for="name">
+                        <FormInputLabel htmlFor="name">
                             Enter your name
                         </FormInputLabel>
                         <FormTextInput
@@ -132,7 +165,7 @@ export default function Home() {
                         ></FormTextInput>
                     </FormInputWrapper>
                     <FormInputWrapper>
-                        <FormInputLabel for="email">
+                        <FormInputLabel htmlFor="email">
                             Enter your email
                         </FormInputLabel>
                         <FormTextInput
@@ -144,7 +177,7 @@ export default function Home() {
                         ></FormTextInput>
                     </FormInputWrapper>
                     <FormInputWrapper>
-                        <FormInputLabel for="password">
+                        <FormInputLabel htmlFor="password">
                             Enter a password
                         </FormInputLabel>
                         <FormTextInput
@@ -155,7 +188,7 @@ export default function Home() {
                         ></FormTextInput>
                     </FormInputWrapper>
                     <FormInputWrapper>
-                        <FormInputLabel for="repassword">
+                        <FormInputLabel htmlFor="repassword">
                             Confirm your password
                         </FormInputLabel>
                         <FormTextInput
@@ -170,7 +203,7 @@ export default function Home() {
             ) : (
                 <LoginDiv>
                     <FormInputWrapper>
-                        <FormInputLabel for="email">Enter your email</FormInputLabel>
+                        <FormInputLabel htmlFor="email">Enter your email</FormInputLabel>
                         <FormTextInput
                         placeholder="Email"
                         type="text"
@@ -179,7 +212,7 @@ export default function Home() {
                         ></FormTextInput>
                     </FormInputWrapper>
                     <FormInputWrapper>
-                        <FormInputLabel for="password">
+                        <FormInputLabel htmlFor="password">
                             Enter your password
                         </FormInputLabel>
                         <FormTextInput
