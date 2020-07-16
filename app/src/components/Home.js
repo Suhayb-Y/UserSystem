@@ -102,96 +102,96 @@ export default function Home() {
     };
 
     return (
-            <FormContainer>
-                <FormNav>
-                    <FormNavHeading
-                        onClick={() => setMode("register")}
-                        mode={mode === "Register" ? true : false}
-                    >
-                        Register
-                    </FormNavHeading>
-                    <FormNavHeading
-                        onClick={() => setMode("login")}
-                        mode={mode === "login" ? true : false}
-                    >
-                        Login
-                    </FormNavHeading>
-                </FormNav>
-                {mode === "register" ? (
-                    <RegisterDiv>
-                        <FormInputWrapper>
-                            <FormInputLabel for="name">
-                                Enter your name
-                            </FormInputLabel>
-                            <FormTextInput
-                                placeholder="Name"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                        <FormInputWrapper>
-                            <FormInputLabel for="email">
-                                Enter your email
-                            </FormInputLabel>
-                            <FormTextInput
-                                placeholder="Email"
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                        <FormInputWrapper>
-                            <FormInputLabel for="password">
-                                Enter a password
-                            </FormInputLabel>
-                            <FormTextInput
-                                placeholder="Password"
-                                type="password"
-                                id="password"
-                                onChange={(e) => setPass(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                        <FormInputWrapper>
-                            <FormInputLabel for="repassword">
-                                Confirm your password
-                            </FormInputLabel>
-                            <FormTextInput
-                                placeholder="Confirm password"
-                                type="password"
-                                id="repassword"
-                                onChange={(e) => setRepass(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                        <SubmitButton onClick={register}>Register</SubmitButton>
-                    </RegisterDiv>
-                ) : (
-                    <LoginDiv>
-                        <FormInputWrapper>
-                            <FormInputLabel for="email">Enter your email</FormInputLabel>
-                            <FormTextInput
-                            placeholder="Email"
+        <FormContainer>
+            <FormNav>
+                <FormNavHeading
+                    onClick={() => setMode("register")}
+                    mode={mode === "Register" ? true : false}
+                >
+                    Register
+                </FormNavHeading>
+                <FormNavHeading
+                    onClick={() => setMode("login")}
+                    mode={mode === "login" ? true : false}
+                >
+                    Login
+                </FormNavHeading>
+            </FormNav>
+            {mode === "register" ? (
+                <RegisterDiv>
+                    <FormInputWrapper>
+                        <FormInputLabel for="name">
+                            Enter your name
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder="Name"
                             type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel for="email">
+                            Enter your email
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder="Email"
+                            type="email"
                             id="email"
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                        <FormInputWrapper>
-                            <FormInputLabel for="password">
-                                Enter your password
-                            </FormInputLabel>
-                            <FormTextInput
-                                placeholder="Password"
-                                type="password"
-                                id="password"
-                                onChange={(e) => setPass(e.target.value)}
-                            ></FormTextInput>
-                        </FormInputWrapper>
-                    <SubmitButton onClick={login}>Login</SubmitButton>
-                    </LoginDiv>
-                )}
-            </FormContainer>
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel for="password">
+                            Enter a password
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder="Password"
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPass(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel for="repassword">
+                            Confirm your password
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder="Confirm password"
+                            type="password"
+                            id="repassword"
+                            onChange={(e) => setRepass(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <SubmitButton onClick={register}>Register</SubmitButton>
+                </RegisterDiv>
+            ) : (
+                <LoginDiv>
+                    <FormInputWrapper>
+                        <FormInputLabel for="email">Enter your email</FormInputLabel>
+                        <FormTextInput
+                        placeholder="Email"
+                        type="text"
+                        id="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel for="password">
+                            Enter your password
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder="Password"
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPass(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                <SubmitButton onClick={login}>Login</SubmitButton>
+                </LoginDiv>
+            )}
+        </FormContainer>
     );
 }
