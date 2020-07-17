@@ -6,17 +6,30 @@ import {
 } from "./components";
 import Auth from "./services/AuthService";
 
+import axios from "axios";
+
 export default function App() {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    Auth.load().then( (res) => {
+    Auth.load(localStorage.getItem('token')).then( (res) => {
       setLoad(true);
     },
     err => {
-        console.log(`An error has occurred during authentication: ${err.response.data}`);
+      setLoad(true);
     });
   }, []);
+
+  const interceptAddToken = axios.interceptors.request.use( (config) => {
+    const token = localStorage.getItem('token');
+    config.headers.authorization = `Bearer ${token}`;
+    return config;
+  }, (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+
+  //Eject later if needed: axios.interceptors.request.eject(interceptAddToken);
 
   return (
     <>

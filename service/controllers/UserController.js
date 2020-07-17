@@ -4,12 +4,11 @@ const User = require('../schemas/UserSchema');
 //Use validate, instead of manually doing it!
 //Test with empty req param
 
-exports.getJWT = (req, res) => {
-    if (!req.cookies.token)
-        return res.status(401).json({message: 'Please login!'});
-    return jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).json({message: 'Invalid or expired token!'});
-        return res.status(200).json(jwt.decode(req.cookies.token));
+exports.jwtVerify = (req, res) => {
+    return jwt.verify(req.body.token, process.env.JWT_SECRET, (err, user) => {
+        if (err)
+            return res.status(403).json({message: 'Invalid or expired token!'});
+        return res.status(200).json({message: "Valid token", data: jwt.decode(req.body.token)});
     });
 };
 
@@ -57,8 +56,6 @@ exports.userLogin = (req, res) => {
         const token = jwt.sign({ email: req.body.email, admin }, 
             process.env.JWT_SECRET, { expiresIn: 60*30 }
         );
-
-        res.cookie('token', token, { httpOnly: true });
 
         return res.json({message: 'Successfully logged in!', token });
     });
