@@ -1,8 +1,7 @@
 const express = require('express');
 const jwt = require('express-jwt');
-const cookieParser = require('cookie-parser');
 const {
-    getJWT,
+    jwtVerify,
     userGet,
     userUpdate,
     userList,
@@ -16,15 +15,22 @@ require('dotenv').config();
 const router = express.Router();
 
 //JWT Authentication
-router.use(cookieParser());
 const appJWT = jwt({
     secret: process.env.JWT_SECRET,
     // Audience+issuer can be anything...
     // audience: 'api.cansheep.ca',
     // issuer: 'sso.cansheep.ca',
     algorithms: ['HS256'],
-    getToken: (req) => req.cookies.token
+    getToken: (req) => {
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        }
+        return null;
+    }
 });
+
+//Dummy, protected call that just returns a success with authorized header
+router.post('/jwt/verify', jwtVerify);
 
 router.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -34,8 +40,6 @@ router.use(function (err, req, res, next) {
         });
     }
 });
-
-router.get('/jwt/get', getJWT);
 
 router.get('/:email', userGet);
 

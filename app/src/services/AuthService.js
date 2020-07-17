@@ -1,26 +1,29 @@
 import axios from "axios";
 
 class AuthService {
-    load() {
-        return axios.get('/api/users/jwt/get').then(res => {
+    constructor() {
+        this.user = {};
+        this.authenticated = false;
+    }
+
+    load(token) {
+        return axios.post('/api/users/jwt/verify', {token}).then(res => {
+            this.user = res.data.data;
             this.authenticated = true;
-            this.user = res.data;
-        }, err => {
-            console.log(err.response.data);
-            this.authenticated = false;
         });
     }
 
     login(user) {
         return axios.post('/api/users/login', user).then(res => {
-            this.authenticated = true;
+            //Save to local storage:
+            window.localStorage.setItem('token', res.data.token);
             return res.data;
         });
     }
 
     logout() {
         this.authenticated = false;
-        //Make API call to destroy cookie
+        window.localStorage.removeItem("token");
     }
 
     register(user) {
