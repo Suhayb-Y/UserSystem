@@ -4,6 +4,9 @@ import styled from "styled-components";
 import axios from "axios";
 import Auth from "../services/AuthService";
 
+const PageContainer = styled.div`
+`;
+
 const FormContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -72,6 +75,23 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
+const LogoutButton = styled.button`
+  width: fit-content;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 15px 20px;
+  font-family: Inter-SemiBold;
+  color: White;
+  font-size: 14px;
+  background: #333333;
+  border-radius: 100px;
+  margin: 5px 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+`;
+
 export default function UserDash() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -102,50 +122,53 @@ export default function UserDash() {
     };
 
     return (
-        <FormContainer>
-            <FormNavHeading>
-                {Auth.user.admin ? 'Admin' : 'Customer'} Dashboard
-            </FormNavHeading>
-            <UserDiv>
-                <FormInputWrapper>
-                    <FormInputLabel htmlFor="name">
-                        Name:
-                    </FormInputLabel>
-                    <FormTextInput
-                        placeholder={name}
-                        type="text"
-                        id="name"
-                        onChange={(e) => setName(e.target.value)}
-                    ></FormTextInput>
-                </FormInputWrapper>
-                <FormInputWrapper>
-                    <FormInputLabel htmlFor="email">
-                        Email:
-                    </FormInputLabel>
-                    <FormTextInput
-                        placeholder={email}
-                        type="email"
-                        id="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                    ></FormTextInput>
-                </FormInputWrapper>
-                <FormInputWrapper>
-                    <FormInputLabel htmlFor="password">
-                        Password:
-                    </FormInputLabel>
-                    <FormTextInput
-                        placeholder={password}
-                        type="password"
-                        id="password"
-                        onChange={(e) => setPass(e.target.value)}
-                    ></FormTextInput>
-                </FormInputWrapper>
-                <SubmitGroup>
-                    <SubmitButton onClick={modifyUser}>Apply Changes</SubmitButton>
-                    <SubmitButton onClick={deleteUser}>Delete Account</SubmitButton>
-                </SubmitGroup>
-            </UserDiv>
-            {admin}
-        </FormContainer>
+        <PageContainer>
+            <LogoutButton onClick={Auth.logout}>Logout</LogoutButton>
+            <FormContainer>
+                <FormNavHeading>
+                    {Auth.user.admin ? 'Admin' : 'Customer'} Dashboard
+                </FormNavHeading>
+                <UserDiv>
+                    <FormInputWrapper>
+                        <FormInputLabel htmlFor="name">
+                            Name:
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder={name}
+                            type="text"
+                            id="name"
+                            onChange={(e) => setName(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel htmlFor="email">
+                            Email:
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder={email}
+                            type="email"
+                            id="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <FormInputWrapper>
+                        <FormInputLabel htmlFor="password">
+                            Password:
+                        </FormInputLabel>
+                        <FormTextInput
+                            placeholder={password}
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPass(e.target.value)}
+                        ></FormTextInput>
+                    </FormInputWrapper>
+                    <SubmitGroup>
+                        <SubmitButton onClick={modifyUser}>Apply Changes</SubmitButton>
+                        <SubmitButton onClick={deleteUser}>Delete Account</SubmitButton>
+                    </SubmitGroup>
+                </UserDiv>
+                {admin}
+            </FormContainer>
+        </PageContainer>
     );
 }

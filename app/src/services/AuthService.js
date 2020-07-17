@@ -22,8 +22,8 @@ class AuthService {
     }
 
     logout() {
-        this.authenticated = false;
         window.localStorage.removeItem("token");
+        window.location.reload(false);
     }
 
     register(user) {
