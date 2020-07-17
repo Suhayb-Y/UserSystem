@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from 'axios';
+
+import Auth from "../services/AuthService";
 
 const FormContainer = styled.div`
   height: 100%;
@@ -102,19 +103,20 @@ export default function Home() {
         };
         console.log(user);
 
-        if (password != repassword) {
+        if (password !== repassword) {
             alert('Passwords do not match!');
             return;
         }
 
-        axios.post('/api/users/register', user).then(res => {
+        Auth.register(user).then( (res) => {
             setName('');
             setEmail('');
             setPass('');
             setRepass('');
             console.log(res.data);
             setMode("login");
-        }, err => {
+        },
+        err => {
             console.log(err.response.data);
         });
     };
@@ -125,9 +127,11 @@ export default function Home() {
             password
         };
 
-        axios.post('/api/users/login', user).then(res => {
-            console.log(res.data);
-        }, err => {
+        Auth.login(user).then( (res) => {
+            window.location.reload(false);
+            console.log(res);
+        },
+        err => {
             console.log(err.response.data);
             setEmail('');
             setPass('');
@@ -184,6 +188,7 @@ export default function Home() {
                             placeholder="Password"
                             type="password"
                             id="password"
+                            value={password}
                             onChange={(e) => setPass(e.target.value)}
                         ></FormTextInput>
                     </FormInputWrapper>
@@ -195,6 +200,7 @@ export default function Home() {
                             placeholder="Confirm password"
                             type="password"
                             id="repassword"
+                            value={repassword}
                             onChange={(e) => setRepass(e.target.value)}
                         ></FormTextInput>
                     </FormInputWrapper>
@@ -208,6 +214,7 @@ export default function Home() {
                         placeholder="Email"
                         type="text"
                         id="email"
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         ></FormTextInput>
                     </FormInputWrapper>
@@ -219,6 +226,7 @@ export default function Home() {
                             placeholder="Password"
                             type="password"
                             id="password"
+                            value={password}
                             onChange={(e) => setPass(e.target.value)}
                         ></FormTextInput>
                     </FormInputWrapper>

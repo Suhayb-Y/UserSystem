@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const UserRouter = require('./routes/UserRouter');
 
-require('dotenv').config()
+require('dotenv').config();
 
 //Body parser (read req body)
 app.use(express.json());

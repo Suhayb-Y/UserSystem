@@ -1,9 +1,20 @@
+const jwt = require('jsonwebtoken');
 const User = require('../schemas/UserSchema');
 
 //Use validate, instead of manually doing it!
 //Test with empty req param
 
-exports.userList = (_, res) => {
+exports.getJWT = (req, res) => {
+    if (!req.cookies.token)
+        return res.status(401).json({message: 'Please login!'});
+    return jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({message: 'Invalid or expired token!'});
+        return res.status(200).json(jwt.decode(req.cookies.token));
+    });
+};
+
+exports.userList = (req, res) => {
+    if (!req.user.admin) return res.sendStatus(401).json({message: 'Unauthorized action!'});
     User.find({}, (err, docs) => {
         if (err) return res.status(400).json({message: `An error has occurred: ${err}`});
 
@@ -23,10 +34,6 @@ exports.userGet = (req, res) => {
 exports.userCreate = (req, res) => {
     console.log("Creating a new user...");
 
-    // const newUser = new User({
-    //     name: req.body.name,
-    //     email: req.body.email
-    // });
     const newUser = new User(req.body);
     
     newUser.save(err => {
@@ -44,8 +51,16 @@ exports.userLogin = (req, res) => {
         if (!user) return res.status(404).json({message: `No user with email ${req.body.email} was found!`});
         if (user.password !== req.body.password) 
             return res.status(400).json({message: `Incorrect password for ${req.body.email}`});
-        console.log(user);
-        return res.json({message: 'Successfully logged in!'});
+
+        //Generate and pass the token
+        const admin = user.rank === "admin" ? true : false;
+        const token = jwt.sign({ email: req.body.email, admin }, 
+            process.env.JWT_SECRET, { expiresIn: 60*30 }
+        );
+
+        res.cookie('token', token, { httpOnly: true });
+
+        return res.json({message: 'Successfully logged in!', token });
     });
 };
 
